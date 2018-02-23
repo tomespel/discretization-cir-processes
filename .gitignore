@@ -45,3 +45,10 @@
 *.cb
 *.cb2
 .*.lb
+*.synctex.gz
+*.fdb_latexmk
+*.nav
+*.snm
+
+# Compile
+bin
