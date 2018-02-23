@@ -1,6 +1,20 @@
-# Hello everyone!
+# Discretisation Schemes for CIR Processes
 
-This is another content line.
-Github Rocks!
-I think githubs sucks way ttto hard.
-"zHello Thomas, this is God. Stop masturbating.
+## Table of Contents
+
+## Features
+
+## Installation
+
+## Usage
+
+## Contribute and support
+
+The team includes the following members, with the associated GitHub identifiers.
+
+| Name | GitHub id |
+| --- | --- |
+|Kees Groeneweg|kegror|
+|Luis Pavon|luispavon22|
+|Mehdi Tomas|mehditomas|
+|Thomas Espel|ddblue75|
