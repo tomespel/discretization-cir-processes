@@ -52,3 +52,6 @@
 
 # Compile
 bin
+
+# Latex pdf
+/report/**/*.pdf
