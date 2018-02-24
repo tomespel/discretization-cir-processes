@@ -7,7 +7,7 @@
 
 using namespace std;
 
-void PlotPathsCIR2(int n, int nn, double x, double T, double k, double a, double sigma) {
+void PlotPathsCIR2(int n, int nn, double x, double T, double k, double a, double sigma) { //This produces n paths from the CIR2 with nn nodes and returns a csv file that contains the paths (each column is a path)
 	vector <vector<double>> M;
 	for (int j = 0; j < n; j++) { M.push_back(CIR2(nn, x, T, k, a, sigma)); }
 
