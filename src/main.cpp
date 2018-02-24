@@ -1,24 +1,28 @@
 /*
 This is the main code file for the project.
 */
-#import <iostream>
-#import <cmath>
+
+#include <iostream>
+#include <vector>
+#include "CIR2.h"
+#include "Plots.h"
 
 using namespace std;
 
 
-/*
-Utility functions
-*/
-double normal_cdf(double value){
-    // erfc is a standard function used to generate normal cdf. It corresponds to the error fucntion.
-    return 0.5 * erfc( - value / sqrt(2) );
-}
+int main() {
+	//Checking with parameters given by pag 24
+	double x0 = 3.0 / 2.0;
+	double k = 1.0 / 2.0;
+	double a = 1.0 / 2.0;
+	double vol = 0.8;
+	double T = 1.0;
+	int nn = 100;        //number of nodes per path
+	int n = 5;          //number of paths we want to plot
 
 
+	PlotPathsCIR2(n, nn, x0, T, k, a, vol);
 
 
-int main(){
-  cout << "Hello world" << endl;
-  return 0;
+	return 0;
 }
