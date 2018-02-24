@@ -21,11 +21,14 @@ In case of an issue, run the following command.
 make clean
 ```
 
+<<<<<<< HEAD
 Another cause of issue is the absence of the directory `/src/bin`. In this case, you can create it manually using the following command.
 ```
 mkdir bin
 ```
 
+=======
+>>>>>>> 816146fed96f49fc1db99379149936a2adb13a67
 ## Contribute and support
 
 The team includes the following members, with the associated GitHub identifiers.
