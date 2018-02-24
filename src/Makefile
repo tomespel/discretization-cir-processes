@@ -14,3 +14,8 @@ bin/distributions.o: distributions.hpp distributions.cpp
 
 bin/plots.o: plots.hpp plots.cpp
 	g++ -c plots.cpp -o bin/plots.o
+
+clean:
+	rm -f bin/*.o
+	rm -f paths_cir2.csv
+	rm -f run

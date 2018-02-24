@@ -8,11 +8,22 @@
 
 ## Usage
 
-In order to build and run the programme, run the following commands in the `src` folder.
+In order to compile and run the project, you can use the following command in the `src` folder.
 
 ```
 make
 ./run
+```
+
+In case of an issue, run the following command.
+
+```
+make clean
+```
+
+Another cause of issue is the absence of the directory `/src/bin`. In this case, you can create it manually using the following command.
+```
+mkdir bin
 ```
 
 ## Contribute and support
