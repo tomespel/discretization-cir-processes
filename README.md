@@ -1,6 +1,5 @@
 # Discretisation Schemes for CIR Processes
 
-<<<<<<< Updated upstream
 ## Table of Contents
 
 ## Features
@@ -37,11 +36,3 @@ The team includes the following members, with the associated GitHub identifiers.
 |Luis Pavon|luispavon22|
 |Mehdi Tomas|mehditomas|
 |Thomas Espel|tjespel|
-=======
-<<<<<<< HEAD
-This is another content line.
-Github Rocks!
-=======
-I think githubs sucks way ttto hard.
->>>>>>> master
->>>>>>> Stashed changes
