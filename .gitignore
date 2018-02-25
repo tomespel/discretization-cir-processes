@@ -51,7 +51,8 @@
 *.snm
 
 # Compile
-bin
+/bin
+/src/run
 
 # Latex pdf
 /report/**/*.pdf
