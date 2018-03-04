@@ -18,9 +18,9 @@ double phi(double x, double t, double Dist, double k, double a, double sigma);
 // Notations used, page 11
 double K(double t, double k, double a, double sigma);
 
-// Compute u_1, Delta, see page 13
-double u_1(double x, double t,double a, double );
+//This is the potential second order scheme near cero when sigma*sigma - 4.0 * a > 0
+double Z(double x, double t, double k, double a, double sigma);
 
 
 // Returns a vector with a sample from the second order scheme
-vector<double> cir2(int n, double x, double T, double k, double a, double sigma);
+vector<double> cir2(int n, double x, double T, double k, double a, double sigma, bool normal);

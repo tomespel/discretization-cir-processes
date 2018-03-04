@@ -9,17 +9,19 @@ double normalCDF(double x, double mu, double stddev) {
 }
 
 
-double SampleY(void){
+double sampleY(){
 	// Samples Y, r.v such that first five moments equal to normal
 	// Values: Y = -sqrt(3) (P = 1/6), +sqrt(3) (P = 1/6), O (P = 2/3)
 	// We can generate them by summing two binomial r.v with parameters "p"
 	// After computations, we find p  = (1/2 + 1/(2*sqrt(3)))
 	double pBinomial = 0.5 + 0.5*(1/sqrt(3));
-	std::binomial_distribution<int> Binomial(1,pBinomial);
+	std::random_device rd;
+	std::default_random_engine gen(rd());
+	std::binomial_distribution<int> Binomial(1, pBinomial);
 
 	// Draw samples from the distribtions
-	double UpDraw = Binomial(generator)*sqrt(3);
-	double DownDraw = -Binomial(generator)*sqrt(3);
+	double UpDraw = Binomial(gen)*sqrt(3);
+	double DownDraw = -Binomial(gen)*sqrt(3);
 
 	// Return their sum, which follows Y's law
 
