@@ -1,7 +1,7 @@
 CXX = clang++
 
-run: bin/main.o bin/cir2.o bin/distributions.o bin/plots.o
-	g++ bin/main.o bin/cir2.o bin/distributions.o bin/plots.o -o run -std=c++11
+run: bin/main.o bin/cir2.o bin/distributions.o bin/plots.o bin/heston.o
+	g++ bin/main.o bin/cir2.o bin/distributions.o bin/plots.o bin/heston.o -o run -std=c++11
 
 bin/main.o: main.cpp
 	g++ -c main.cpp -o bin/main.o -std=c++11
@@ -14,6 +14,9 @@ bin/distributions.o: distributions.hpp distributions.cpp
 
 bin/plots.o: plots.hpp plots.cpp
 	g++ -c plots.cpp -o bin/plots.o -std=c++11
+
+bin/heston.o: heston.hpp heston.cpp
+	g++ -c heston.cpp -o bin/heston.o -std=c++11
 
 clean:
 	rm -f bin/*.o
