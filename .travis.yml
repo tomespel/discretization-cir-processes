@@ -18,5 +18,4 @@ branches:
 script:
   - cd src
   - mkdir bin
-  - mkdir output
   - make
