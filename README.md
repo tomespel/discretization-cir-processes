@@ -1,4 +1,6 @@
 # Discretisation Schemes for CIR Processes
+[![Build Status](https://travis-ci.com/tjespel/discretization-schemes-cir-processes.svg?token=H7bzknKpKUjcDxrX949q&branch=master)](https://travis-ci.com/tjespel/discretization-schemes-cir-processes)
+
 
 ## Table of Contents
 
