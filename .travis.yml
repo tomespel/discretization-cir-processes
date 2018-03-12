@@ -1,0 +1,19 @@
+language: cpp
+dist: trusty
+compiler:
+- g++
+os:
+- linux
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-6
+
+
+branches:
+  only:
+  - master
+
+script: cd src; make
