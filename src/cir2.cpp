@@ -39,7 +39,7 @@ double Z(double x, double t, double k, double a, double sigma) {
 	uniform_real_distribution<double> u(0.0, 1.0);//U(0,1)
 
 	if (u(gen) <= pi) { return u_1 / (2.0*pi); }
-	
+
 	else return u_1 / (2.0*(1 - pi));
 
 }
@@ -49,7 +49,7 @@ vector<double> cir2(int n, double x0, double T, double k, double a, double sigma
 	v.push_back(x0);                   //First element is the initial value
 	double delta = T / (double)n;     //This is the interval  step
 	double P = sigma*sigma - 4.0 * a; //May be useful to define
-	
+
 	if (P <= 0.0) {//Here formula (11) from the paper, in this case we can sample from a normal dist, but we can also implement it using the random variable given at example 2.3.
 		if (normal) {
 			random_device rd;
