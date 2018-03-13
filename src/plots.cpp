@@ -1,7 +1,3 @@
-#include "cir2.hpp"
-using namespace std;
-
-
 #include "plots.hpp"
 
 int plot_paths_cir2(int n, int nn, double x, double T, double k, double a, double sigma, bool normal, string c) {
@@ -28,7 +24,7 @@ int plot_paths_cir2(int n, int nn, double x, double T, double k, double a, doubl
 int plot_paths_cir2(int n, int nn, double x, double T, double k, double a, bool normal, string c) {
 
 	vector <vector<double> > result_vector;
-	<vector<double> > volatility_vector;
+	vector <vector<double> > volatility_vector;
 
 
 
@@ -38,12 +34,14 @@ int plot_paths_cir2(int n, int nn, double x, double T, double k, double a, bool 
 	/* TODO
 	Figure out how to generate sigma with current CIR2 structure*/
 	// Building the volatility path
-	volatility_vector = cir2(nn, x, T, k, a, sigma, normal);
+	for (int i = 0; i < n; i++) {
+		volatility_vector.push_back(cir2(nn, x, T, k, a, sigma, normal));
+	}
 
 	/* TODO
 	Make sure that the a parameter corresponds to the drift*/
 	// Building result_vector
-	for (int j = 0; j < n; j++) {
+	for (int i = 0; i < n; i++) {
 		result_vector.push_back(heston(a, volatility_vector[i], x, n));
 	}
 

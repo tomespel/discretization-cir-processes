@@ -13,4 +13,4 @@ double heston_differential(double drift, double volatility, double St, double st
 
 // Computes the integral
 // The volatility is obtained with a CIR process
-vector<double> heston(double drift, vector<double> volatility, double S0, double size);
+vector<double> heston(double drift, vector<double> volatility, double S0, int size);

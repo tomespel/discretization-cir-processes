@@ -1,4 +1,4 @@
-#include "monte_carlo.h"
+#include "monte_carlo.hpp"
 
 
 double E(int m, int n, double x, double T, double k, double a, double sigma, bool normal) { //m: number of paths, rest of parameters as in cir2

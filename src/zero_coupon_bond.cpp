@@ -1,4 +1,4 @@
-#include "zero_coupon_bond.h"
+#include "zero_coupon_bond.hpp"
 
 double P(double r, double T, double k, double a, double sigma) {
 	double h = sqrt(k*k + 2.0*sigma*sigma);
