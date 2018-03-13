@@ -26,9 +26,6 @@ int plot_paths_cir2(int n, int nn, double x, double T, double k, double a, bool 
 	vector <vector<double> > result_vector;
 	vector <vector<double> > volatility_vector;
 
-
-
-
 	double sigma = 0;
 
 	/* TODO
