@@ -26,3 +26,42 @@ void plot_paths_cir2(int n, int nn, double x, double T, double k, double a, doub
 	}
 	fout.close();
 }
+
+
+void plot_average(int m, int N, double x, double T, double k, double a, double sigma, bool normal, string c) { //For fixed m computes E and write them in a csv file running n from 1 to N
+	vector<double> values;
+	for (int j = 1; j <= N; j++) {
+		values.push_back(E(m, j, x, T, k, a, sigma, normal));
+	}
+
+	reverse(values.begin(), values.end());
+
+	ofstream fout(c);
+	if (!fout.is_open()) {
+		cout << "Error opening the file output.txt for writing." << endl;
+		//return -1;
+	}
+	for (int j = 0; j < values.size(); j++) {
+		fout << setprecision(5) << values[j] << endl;
+	}
+	fout.close();
+}
+
+void plot_order(int m, int N, double x, double T, double k, double a, double sigma, bool normal, string c) { //For fixed m computes log(error) and write them in a csv file running n from 1 to N
+	vector<double> values;
+	for (int j = 1; j <= N; j++) {
+		values.push_back(log(error(m, j, x, T, k, a, sigma, normal)));
+	}
+
+	reverse(values.begin(), values.end());
+
+	ofstream fout(c);
+	if (!fout.is_open()) {
+		cout << "Error opening the file output.txt for writing." << endl;
+		//return -1;
+	}
+	for (int j = 0; j < values.size(); j++) {
+		fout << setprecision(5) << values[j] << endl;
+	}
+	fout.close();
+}

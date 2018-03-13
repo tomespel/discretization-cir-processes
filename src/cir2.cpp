@@ -11,8 +11,8 @@ double psi(double k, double t) {
 }
 
 double phi(double x, double t, double Dist, double k, double a, double sigma) {
-	double P = pow(sigma, 2) - 4.0 * a;
-	return exp(-k*t / 2.0)*pow((sqrt(-P*psi(k, t / 2.0) + exp(-k*t / 2.0) * x) + sigma*sqrt(t)*Dist / 2.0), 2) + -P*psi(k, t / 2.0); //Here formula (11) from the paper
+	double P = sigma*sigma - 4.0 * a;
+	return exp(-k*t / 2.0)*pow(sqrt((-P/4.0)*psi(k, t / 2.0) + exp(-k*t / 2.0) * x) + (sigma*sqrt(t)*Dist / 2.0), 2.0) + (-P/4.0)*psi(k, t / 2.0); //Here formula (11) from the paper
 }
 
 double K(double t, double k, double a, double sigma){
@@ -44,9 +44,9 @@ double Z(double x, double t, double k, double a, double sigma) {
 
 }
 
-vector<double> cir2(int n, double x, double T, double k, double a, double sigma, bool normal) { //If normal = true uses normal rv in P<=0 otherwise uses Y rv (We can use sampleY or any other rv that matches the first 5 moments af a N(0,1))
+vector<double> cir2(int n, double x0, double T, double k, double a, double sigma, bool normal) { //If normal = true uses normal rv in P<=0 otherwise uses Y rv (We can use sampleY or any other rv that matches the first 5 moments af a N(0,1))
 	vector<double> v;
-	v.push_back(x);                   //First element is the initial value
+	v.push_back(x0);                   //First element is the initial value
 	double delta = T / (double)n;     //This is the interval  step
 	double P = sigma*sigma - 4.0 * a; //May be useful to define
 	

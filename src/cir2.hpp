@@ -23,4 +23,4 @@ double Z(double x, double t, double k, double a, double sigma);
 
 
 // Returns a vector with a sample from the second order scheme
-vector<double> cir2(int n, double x, double T, double k, double a, double sigma, bool normal);
+vector<double> cir2(int n, double x0, double T, double k, double a, double sigma, bool normal);
