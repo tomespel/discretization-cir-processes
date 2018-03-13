@@ -11,9 +11,11 @@ addons:
     packages:
       - g++-6
 
-
 branches:
   only:
   - master
 
-script: cd src; make
+script:
+  - cd src
+  - mkdir bin
+  - make
