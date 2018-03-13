@@ -161,4 +161,4 @@ ENV/
 /src/run
 
 # Latex pdf
-/report/**/*.pdf
+#/report/**/*.pdf
