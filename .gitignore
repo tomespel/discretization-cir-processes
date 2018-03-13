@@ -138,7 +138,7 @@ ENV/
 *.app
 
 # LaTeX
-*.pdf
+#*.pdf
 *.aux
 *.lof
 *.log
@@ -161,4 +161,4 @@ ENV/
 /src/run
 
 # Latex pdf
-#/report/**/*.pdf
+#/report/*.pdf
