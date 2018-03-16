@@ -9,5 +9,8 @@
 
 double normalCDF(double x, double mu, double stddev);
 double sampleY();
+int poisson(double theta);
+double gamma(double a);
+double chi_square(double v);
 
 //Here we can add functions that sample from different distributions

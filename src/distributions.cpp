@@ -28,3 +28,74 @@ double sampleY(){
 	return UpDraw + DownDraw;
 
 }
+
+int poisson(double theta) {
+	double p = exp(-theta);
+	double F = p;
+	int N = 0;
+	std::random_device rd;
+	std::default_random_engine gen(rd());
+	std::uniform_real_distribution<double> u(0.0, 1.0);
+
+	while (u(gen) > F) {
+		N = N + 1;
+		p = p*theta / (double)N;
+		F = F + p;
+	}
+
+	return N;
+}
+
+double gamma(double a) { //This generates gamma (a, 1)
+	std::random_device rd;
+	std::default_random_engine gen(rd());
+	std::uniform_real_distribution<double> u(0.0, 1.0);
+	if (a > 1) {
+		double a_bar = a - 1.0;
+		double b = (a - (1.0 / (6 * a))) / a_bar;
+		double m = 2.0 / a_bar;
+		double d = m + 2.0;
+		double v = 1.0;
+		int accept = -1;
+
+		while (accept < 0) {
+			double u1 = u(gen);
+			double u2 = u(gen);
+			v = b*u2 / u1;
+			if (m*u1 - d + v + (1 / v) <= 0.0) { accept = 1; }
+			else if (m*log(u1) - log(v) + v - 1.0 <= 0.0) { accept = 1; }
+		}
+
+		return a_bar*v;;
+	}
+
+	else {
+		double b = (a + exp(1.0)) / exp(1.0);
+		int accept = -1;
+		double z = 1.0;
+		while (accept < 0) {
+			double u1 = u(gen);
+			double u2 = u(gen);
+			double y = b*u1;
+			if (y <= 1.0) { 
+				z = pow(y, 1.0 / a);
+				if (u2 <= exp(-z)) { accept = 1; }
+			}
+			else {
+				z = -log((b - y) / a);
+				if (u2 <= pow(z, a - 1.0)) { accept = 1; }
+			}
+		}
+
+		return z;
+	}
+}
+
+double chi_square(double v) {
+	double a = v /2.0 ;
+	double beta = 2.0;
+
+	double x = gamma(a);
+
+	return beta*x;
+}
