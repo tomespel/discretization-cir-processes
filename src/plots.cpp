@@ -27,7 +27,8 @@ void plot_paths_cir2(int n, int nn, double x, double T, double k, double a, doub
 	fout.close();
 }
 
-<<<<<<< HEAD
+
+
 int plot_paths_cir2(int n, int nn, double x, double T, double k, double a, bool normal, string c) {
 
 	vector <vector<double> > result_vector;
@@ -60,11 +61,11 @@ int plot_paths_cir2(int n, int nn, double x, double T, double k, double a, bool 
 		result_vector.push_back(heston(a, volatility_vector[i], x, n));
 	}
 
-=======
+
+
 void plot_paths_exact(int n, int nn, double x, double T, double k, double a, double sigma, bool normal, string c) {
 	vector <vector<double> > M;
 	for (int j = 0; j < n; j++) { M.push_back(exact(nn, x, T, k, a, sigma)); }
->>>>>>> 62555a8a0c3dd6c0b407700301bb7d51aab15698
 
 	ofstream fout(c);
 	if (!fout.is_open()) {
