@@ -1,4 +1,4 @@
-#include "schemes.h"
+#include "schemes.hpp"
 
 vector<double> exact(int n, double x0, double T, double k, double a, double sigma) { //following pag 124 Glasserman
 	double alpha = k;//This is to preserve the notation used at glasserman using the parameters given at the paper.
@@ -23,7 +23,7 @@ vector<double> exact(int n, double x0, double T, double k, double a, double sigm
 		}
 	}
 	else {
-		for (int j = 0; j < n; j++) { 
+		for (int j = 0; j < n; j++) {
 			double c = sigma*sigma*(1.0 - exp(-alpha*delta)) / (4.0*alpha);
 			double lambda = v.back()*exp(-alpha*delta) / c;
 			int N = poisson(lambda / 2.0);
@@ -82,8 +82,8 @@ vector<double> cir2_K3(int n, double x0, double T, double k, double a, double si
 		}
 		else v.push_back(phi(x, t, sampleY(), k, a, sigma));
 	}
-	
-	return v;	
+
+	return v;
 }
 
 vector<double> cir2_K4(int n, double x0, double T, double k, double a, double sigma) { //If normal = true uses normal rv in P<=0 otherwise uses Y rv (We can use sampleY or any other rv that matches the first 5 moments af a N(0,1))
