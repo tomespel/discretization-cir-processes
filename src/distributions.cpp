@@ -29,17 +29,17 @@ double sampleY(){
 
 }
 
-int poisson(double theta) {
+double poisson(double theta) {
 	double p = exp(-theta);
 	double F = p;
-	int N = 0;
+	double N = 0.0;
 	std::random_device rd;
 	std::default_random_engine gen(rd());
 	std::uniform_real_distribution<double> u(0.0, 1.0);
 
 	while (u(gen) > F) {
-		N = N + 1;
-		p = p*theta / (double)N;
+		N = N + 1.0;
+		p = p*theta / N;
 		F = F + p;
 	}
 

@@ -49,8 +49,16 @@ int main(){
 	//plot_paths_cir2(n, 600, x0_b, 60.0, 0.05, 0.25, vol_b, false, "output/paths_cir2_D.csv");
 
 	double mean = cir_mean(x0, T, k, a, vol);
-	double moment = moment_gen_noncentral_chi(-1.0, mean);
+	double c = 2.0*k / ((1.0 - exp(-k*T))*vol*vol);
+	double lambda = 2.0*c*x0*exp(-k*T);
+	double moment = moment_gen_noncentral_chi(-1.0/(2.0*c), lambda, 4.0*a/(vol*vol));
 	cout << setprecision(5) << mean << " " << moment << endl;
+
+	double mean_b = cir_mean(x0_b, T, k_b, a_b, vol_b);
+	double c_b = 2.0*k_b / ((1.0 - exp(-k_b*T))*vol_b*vol_b);
+	double lambda_b = 2.0*c_b*x0_b*exp(-k_b*T);
+	double moment_b = moment_gen_noncentral_chi(-1.0 / (2.0*c_b),lambda_b, 4.0*a_b / (vol_b*vol_b));
+	cout << setprecision(5) << mean_b << " " << moment_b << endl;
 
 	/*
 	for (int j = 1; j <25; j++) {
@@ -85,9 +93,9 @@ int main(){
 	//plot_order(10000, 1000, x0, T, k, a, vol, true, "output/order.csv");
 
 	//Plot Paper
-	plot_paper(100000, 25, x0, T, k, a, vol, true, "output/plot_paper.csv");
+	plot_paper(100000, 100, x0, T, k, a, vol, true, "output/plot_paper.csv");
 
-	plot_paper(100000, 25, 0.3, 1.0, 0.1, 0.04, 2.0, false, "output/plot_paper_B.csv");
+	plot_paper(100000, 100, 0.3, 1.0, 0.1, 0.04, 2.0, false, "output/plot_paper_B.csv");
 
 
 	system("pause");

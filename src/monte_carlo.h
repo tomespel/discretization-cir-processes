@@ -11,4 +11,4 @@ double Eb3(int m, int n, double x, double T, double k, double a, double sigma);
 
 double error(int m, int n, double x, double T, double k, double a, double sigma, bool normal);
 
-vector<double> E_exp_paper(int m, int n, double x, double T, double k, double a, double sigma, bool normal);
+vector<double> E_exp_paper(int m, int n, double x, double T, double k, double a, double sigma, bool cir2_normal);

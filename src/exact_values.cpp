@@ -8,8 +8,8 @@ double cir_variance(double x0, double t, double k, double a, double sigma) {
 	return x0*sigma*sigma*(exp(-k*t) - exp(-2.0*k*t)) / k + a*sigma*sigma*(1.0 - exp(-k*t))*(1.0 - exp(-k*t)) / (2.0*k*k);
 }
 
-double moment_gen_noncentral_chi(double t, double mean) {
-	return exp(mean*mean*t / (1.0 - 2.0*t)) / sqrt(1.0 - 2.0*t);
+double moment_gen_noncentral_chi(double t, double lambda, double v) {
+	return exp(lambda*t / (1.0 - 2.0*t)) / pow((1.0 - 2.0*t), (v/2.0));
 }
 
 double zero_coupon(double r, double T, double k, double a, double sigma) {

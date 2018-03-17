@@ -74,13 +74,13 @@ void plot_average(int m, int N, double x, double T, double k, double a, double s
 	fout.close();
 }
 
-void plot_order(int m, int N, double x, double T, double k, double a, double sigma, bool normal, string c) { //For fixed m computes log(error) and write them in a csv file running n from 1 to N
+void plot_order(int m, int N, double x, double T, double k, double a, double sigma, bool normal, string c) { //For fixed m computes -log(error) and write them in a csv file running n from 1 to N
 	vector<double> values;
 	for (int j = 100; j <= N; j+=100) {
-		values.push_back(log(error(m, j, x, T, k, a, sigma, normal)));
+		values.push_back(-log(error(m, j, x, T, k, a, sigma, normal)));
 	}
 
-	reverse(values.begin(), values.end());
+	//reverse(values.begin(), values.end());
 
 	ofstream fout(c);
 	if (!fout.is_open()) {
@@ -100,14 +100,30 @@ void plot_paper(int m, int N, double x, double T, double k, double a, double sig
 	vector<double> values_K4;
 	vector<double> values_b1;
 	vector<double> values_b3;
-	for (int j = 1; j <= N; j++) {
-		vector<double> E = E_exp_paper(m, j, x, T, k, a, sigma, normal);
-		values_cir2.push_back(E[0]);
-		values_exact.push_back(E[1]);
-		values_K3.push_back(E[2]);
-		values_K4.push_back(E[3]);
-		values_b1.push_back(E[4]);
-		values_b3.push_back(E[5]);
+	if (normal) {
+		for (int j = 1; j <= N; j++) {
+			cout << j << endl;
+			vector<double> E = E_exp_paper(m, j, x, T, k, a, sigma, normal);
+			values_cir2.push_back(E[0]);
+			values_exact.push_back(E[1]);
+			values_K3.push_back(E[0]);
+			values_K4.push_back(E[0]);
+			values_b1.push_back(E[2]);
+			values_b3.push_back(E[3]);
+		}
+	}
+
+	else {
+		for (int j = 1; j <= N; j++) {
+			cout << j << endl;
+			vector<double> E = E_exp_paper(m, j, x, T, k, a, sigma, normal);
+			values_cir2.push_back(E[0]);
+			values_exact.push_back(E[1]);
+			values_K3.push_back(E[2]);
+			values_K4.push_back(E[3]);
+			values_b1.push_back(E[4]);
+			values_b3.push_back(E[5]);
+		}
 	}
 
 	ofstream fout(c);

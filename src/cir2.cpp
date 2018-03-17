@@ -88,6 +88,40 @@ vector<double> cir2(int n, double x0, double T, double k, double a, double sigma
 	}
 }
 
+vector<double> cir2_MC(int n, double x0, double T, double k, double a, double sigma, bool normal, vector<double> sample) { //If normal = true uses normal rv in P<=0 otherwise uses Y rv (We can use sampleY or any other rv that matches the first 5 moments af a N(0,1))
+	vector<double> v;
+	v.push_back(x0);                   //First element is the initial value
+	double delta = T / (double)n;     //This is the interval  step
+	double P = sigma*sigma - 4.0 * a; //May be useful to define
+
+	if (P <= 0.0) {//Here formula (11) from the paper, in this case we can sample from a normal dist, but we can also implement it using the random variable given at example 2.3.
+		if (normal) {
+			for (int j = 1; j <= n; j++) { //Now t = delta, x = v.back(), Dist = d(gen) which is the last value and thus, the initial value for next step
+				v.push_back(phi(v.back(), delta, sample[j - 1], k, a, sigma));
+			}
+			return v;
+		}
+		else {
+			for (int j = 1; j <= n; j++) { //Now t = delta, x = v.back(), Dist = sampleY() which is the last value and thus, the initial value for next step
+				v.push_back(phi(v.back(), delta, sample[j - 1], k, a, sigma));
+			}
+			return v;
+		}
+	}
+
+	else { //P > 0.0
+		for (int j = 1; j <= n; j++) {
+			double t = delta;
+			double x = v.back();
+			if (x < K(t, k, a, sigma)) {
+				v.push_back(Z(x, t, k, a, sigma));
+			}
+			else v.push_back(phi(x, t, sample[j - 1], k, a, sigma));
+		}
+		return v;
+	}
+}
+
 
 vector<double> cir2_heston(int n, double x0, double T, double k, double a, double sigma, vector<double> normal) { //Returns a path with n steps (return n + 1 elements: n steps + the initial point) taking a vector called "normal" of n independent samples of standard normal variable
 	vector<double> v;
