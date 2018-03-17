@@ -26,6 +26,17 @@ int plot_paths_cir2(int n, int nn, double x, double T, double k, double a, bool 
 	vector <vector<double> > result_vector;
 	vector <vector<double> > volatility_vector;
 
+
+	// Add the random generation parameters
+	vector<double> Z1;
+	vector<double> Z2;
+
+	double rau = 1; // TODO change it
+	for (int i=0; i<Z2.size(); i++){
+		Z2[i] = rau * rau * Z2[i] + (1 - rau * rau ) * Z1[i];
+	}
+
+
 	double sigma = 0;
 
 	/* TODO
