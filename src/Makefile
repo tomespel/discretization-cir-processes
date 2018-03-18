@@ -1,7 +1,7 @@
 CXX = clang++
 
-run: bin/main.o bin/cir2.o bin/distributions.o bin/plots.o bin/heston.o bin/monte_carlo.o bin/zero_coupon_bond.o
-	g++ bin/main.o bin/cir2.o bin/distributions.o bin/plots.o bin/heston.o bin/monte_carlo.o bin/zero_coupon_bond.o -o run -std=c++11
+run: bin/main.o bin/cir2.o bin/distributions.o bin/plots.o bin/heston.o bin/monte_carlo.o bin/zero_coupon_bond.o bin/exact_values.o bin/schemes.o
+	g++ bin/main.o bin/cir2.o bin/distributions.o bin/plots.o bin/heston.o bin/monte_carlo.o bin/zero_coupon_bond.o bin/exact_values.o bin/schemes.o -o run -std=c++11
 
 bin/main.o: main.cpp
 	g++ -c main.cpp -o bin/main.o -std=c++11
@@ -23,6 +23,12 @@ bin/monte_carlo.o: monte_carlo.hpp monte_carlo.cpp
 
 bin/zero_coupon_bond.o: zero_coupon_bond.hpp zero_coupon_bond.cpp
 	g++ -c zero_coupon_bond.cpp -o bin/zero_coupon_bond.o -std=c++11
+
+bin/exact_values.o: exact_values.hpp exact_values.cpp
+	g++ -c exact_values.cpp -o bin/exact_values.o -std=c++11
+
+bin/schemes.o: schemes.hpp schemes.cpp
+	g++ -c schemes.cpp -o bin/schemes.o -std=c++11
 
 clean:
 	rm -f bin/*.o

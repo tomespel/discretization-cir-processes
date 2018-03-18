@@ -1,5 +1,5 @@
 #include "cir2.hpp"
-#include "schemes.h"
+#include "schemes.hpp"
 
 double Ecir2(int m, int n, double x, double T, double k, double a, double sigma, bool normal);
 

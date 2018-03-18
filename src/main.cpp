@@ -1,6 +1,6 @@
 #include "plots.hpp"
 #include "distributions.hpp"
-#include "exact_values.h"
+#include "exact_values.hpp"
 #include "cir2.hpp"
 
 /*
@@ -65,7 +65,7 @@ int main(){
 		cout << j << " " << Ecir2(20000, j, x0, T, k, a, vol, true) << endl;
 	}
 	*/
-	
+
 
 
 	/*
@@ -82,7 +82,7 @@ int main(){
 		cout << E << endl;
 	}
 	*/
-	
+
 
 
 	//plot_average(15000, 15, x0, T, k, a, vol, true, "output/fig1.csv");
