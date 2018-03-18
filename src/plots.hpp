@@ -5,7 +5,9 @@
 #include <algorithm>
 
 #include "cir2.hpp"
-#include "monte_carlo.hpp"
+#include "monte_carlo.h"
+
+void plot_mean_var_cir2(int nn, double x, double T, double k, double a, double sigma, string c);
 
 void plot_paths_cir2(int n, int nn, double x, double T, double k, double a, double sigma, bool normal, string c);
 

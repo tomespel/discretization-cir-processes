@@ -40,19 +40,9 @@ double Z(double x, double t, double k, double a, double sigma) {
 	double delta = 1 - u_1*u_1 / u_2;
 	double pi = (1 - sqrt(delta)) / 2.0;
 
-<<<<<<< Updated upstream
 	random_device rd;
 	default_random_engine gen(rd());
 	uniform_real_distribution<double> u(0.0, 1.0);//U(0,1)
-=======
-// FINISH IMPLEMENTING U2 AND DELTA
-double u_2(double x, double t,double k, double a,double sigma){
-	double u = u_1(x,t,k,a);
-	double psi_k = psi(k,t);
-	double c = sigma*sigma*psi_k;
-	
-};
->>>>>>> Stashed changes
 
 	if (u(gen) <= pi) { return u_1 / (2.0*pi); }
 	

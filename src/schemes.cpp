@@ -1,4 +1,4 @@
-#include "schemes.hpp"
+#include "schemes.h"
 
 vector<double> exact(int n, double x0, double T, double k, double a, double sigma) { //following pag 124 Glasserman
 	double alpha = k;//This is to preserve the notation used at glasserman using the parameters given at the paper.
@@ -23,7 +23,7 @@ vector<double> exact(int n, double x0, double T, double k, double a, double sigm
 		}
 	}
 	else {
-		for (int j = 0; j < n; j++) {
+		for (int j = 0; j < n; j++) { 
 			double c = sigma*sigma*(1.0 - exp(-alpha*delta)) / (4.0*alpha);
 			double lambda = v.back()*exp(-alpha*delta) / c;
 			double N = poisson(lambda / 2.0);
@@ -81,8 +81,19 @@ vector<double> cir2_K3(int n, double x0, double T, double k, double a, double si
 		}
 		else v.push_back(phi(x, t, sampleY(), k, a, sigma));
 	}
+	
+	return v;	
+}
 
-	return v;
+double phi_K4(double x, double t, double Dist, double k, double a, double sigma) {
+	double p = a - sigma*sigma / 4.0;
+	double phi_k = psi(k, t / 2.0);
+	double e = exp(-k*t / 2.0);
+	double r = sqrt(max(p*phi_k + e*x, 0.0));
+	double s = (r + (sigma*sqrt(t)*Dist / 2.0))*(r + (sigma*sqrt(t)*Dist / 2.0));
+
+	return e*s + p*phi_k;
+	//Here formula (11) from the paper with pos parts
 }
 
 vector<double> cir2_K4(int n, double x0, double T, double k, double a, double sigma) { 
@@ -98,7 +109,7 @@ vector<double> cir2_K4(int n, double x0, double T, double k, double a, double si
 		if (x < (1.0 / 2.0)*K(t, k, a, sigma)) {
 			v.push_back(Z(x, t, k, a, sigma));
 		}
-		else v.push_back(phi(x, t, sampleY(), k, a, sigma));
+		else v.push_back(phi_K4(x, t, sampleY(), k, a, sigma));
 	}
 
 	return v;
@@ -135,7 +146,6 @@ vector<double> exact_heston(int n, double x0, double T, double k, double a, doub
 
 	return v;
 }
-<<<<<<< HEAD
 
 vector<double> b1_MC(int n, double x0, double T, double k, double a, double sigma, vector<double> sample) {
 	double beta = a / k; //To preserve notations of the paper 2.
@@ -193,10 +203,8 @@ vector<double> cir2_K4_MC(int n, double x0, double T, double k, double a, double
 		if (x < (1.0 / 2.0)*K(t, k, a, sigma)) {
 			v.push_back(Z(x, t, k, a, sigma));
 		}
-		else v.push_back(phi(x, t, sample[j-1], k, a, sigma));
+		else v.push_back(phi_K4(x, t, sample[j-1], k, a, sigma));
 	}
 
 	return v;
 }
-=======
->>>>>>> master

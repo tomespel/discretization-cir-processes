@@ -1,4 +1,4 @@
-#include "monte_carlo.hpp"
+#include "monte_carlo.h"
 
 
 double Ecir2(int m, int n, double x, double T, double k, double a, double sigma, bool normal) { //m: number of paths, rest of parameters as in cir2
