@@ -29,3 +29,6 @@ vector<double> cir2_MC(int n, double x0, double T, double k, double a, double si
 
 //Returns a path with n steps (returns a vector with n + 1 elements: n steps + the initial point). Takes a vector called "normal" of n independent samples of standard normal variable
 vector<double> cir2_heston(int n, double x0, double T, double k, double a, double sigma, vector<double> normal);
+
+double u_2func(double x, double t,double k, double a,double sigma);
+double u_1func(double x, double t,double k, double a);

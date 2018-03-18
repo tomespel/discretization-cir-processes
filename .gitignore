@@ -159,6 +159,7 @@ ENV/
 # Compile
 /bin
 /src/run
+.DS_Store
 
 # Latex pdf
 #/report/*.pdf
