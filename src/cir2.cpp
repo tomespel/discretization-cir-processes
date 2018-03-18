@@ -16,7 +16,7 @@ double phi(double x, double t, double Dist, double k, double a, double sigma) {
 	double e = exp(-k*t / 2.0);
 	double r = sqrt(p*phi_k + e*x);
 	double s = (r + (sigma*sqrt(t)*Dist / 2.0))*(r + (sigma*sqrt(t)*Dist / 2.0));
-	
+
 	return e*s + p*phi_k;
 	//Here formula (11) from the paper
 }
@@ -35,37 +35,43 @@ double K(double t, double k, double a, double sigma){
 
 //This is the potential second order scheme near cero when sigma*sigma - 4.0 * a > 0
 double Z(double x, double t, double k, double a, double sigma) {
-	double u_1 = x*exp(-k*t) + a*psi(k, t);
+	double u_1 = u_1func(x,t,k,a);
 	double u_2 = u_1*u_1 + sigma*sigma*psi(k, t)*(a*psi(k, t)/2.0 + x*exp(-k*t));
 	double delta = 1 - u_1*u_1 / u_2;
 	double pi = (1 - sqrt(delta)) / 2.0;
 
-<<<<<<< Updated upstream
 	random_device rd;
 	default_random_engine gen(rd());
 	uniform_real_distribution<double> u(0.0, 1.0);//U(0,1)
-=======
-// FINISH IMPLEMENTING U2 AND DELTA
-double u_2(double x, double t,double k, double a,double sigma){
-	double u = u_1(x,t,k,a);
-	double psi_k = psi(k,t);
-	double c = sigma*sigma*psi_k;
-	
-};
->>>>>>> Stashed changes
+
 
 	if (u(gen) <= pi) { return u_1 / (2.0*pi); }
-	
+
 	else return u_1 / (2.0*(1 - pi));
 
 }
+
+double u_1func(double x, double t,double k, double a){
+	return x*exp(-k*t) + a*psi(k, t);
+
+}
+
+// TODO FINISH IMPLEMENTING U2 AND DELTA
+double u_2func(double x, double t,double k, double a,double sigma){
+	double u = u_1func(x,t,k,a);
+	double psi_k = psi(k,t);
+	double c = sigma*sigma*psi_k;
+
+	return 0.0;
+}
+
 
 vector<double> cir2(int n, double x0, double T, double k, double a, double sigma, bool normal) { //If normal = true uses normal rv in P<=0 otherwise uses Y rv (We can use sampleY or any other rv that matches the first 5 moments af a N(0,1))
 	vector<double> v;
 	v.push_back(x0);                   //First element is the initial value
 	double delta = T / (double)n;     //This is the interval  step
 	double P = sigma*sigma - 4.0 * a; //May be useful to define
-	
+
 	if (P <= 0.0) {//Here formula (11) from the paper, in this case we can sample from a normal dist, but we can also implement it using the random variable given at example 2.3.
 		if (normal) {
 			random_device rd;
@@ -103,7 +109,7 @@ vector<double> cir2_heston(int n, double x0, double T, double k, double a, doubl
 	vector<double> v;
 	v.push_back(x0);                   //First element is the initial value
 	double delta = T / (double)n;     //This is the interval  step
-	for (int j = 1; j <= n; j++) { 
+	for (int j = 1; j <= n; j++) {
 		v.push_back(phi(v.back(), delta, normal[j - 1], k, a, sigma));
 	}
 	return v;

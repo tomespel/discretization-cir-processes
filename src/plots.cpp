@@ -1,5 +1,4 @@
-#include "cir2.hpp"
-using namespace std;
+#include "plots.hpp"
 
 //<<<<<<< HEAD:src/Plots.h
 //void PlotPathsCIR2(int n, int nn, double x, double T, double k, double a, double sigma) { //This produces n paths from the CIR2 with nn nodes and returns a csv file that contains the paths (each column is a path)
@@ -29,13 +28,17 @@ void plot_paths_cir2(int n, int nn, double x, double T, double k, double a, doub
 
 
 
-int plot_paths_cir2(int n, int nn, double x, double T, double k, double a, bool normal, string c) {
+int plot_paths_cir2_heston(int n, int nn, double x, double T, double k, double a, string c) {
 
 	vector <vector<double> > result_vector;
 	vector <vector<double> > volatility_vector;
 
 
 	// Add the random generation parameters
+
+	std::default_random_engine generator;
+	std::normal_distribution<double> normal(0.0,1.0);
+
 	vector<double> Z1;
 	vector<double> Z2;
 
@@ -51,16 +54,16 @@ int plot_paths_cir2(int n, int nn, double x, double T, double k, double a, bool 
 	Figure out how to generate sigma with current CIR2 structure*/
 	// Building the volatility path
 	for (int i = 0; i < n; i++) {
-		volatility_vector.push_back(cir2(nn, x, T, k, a, sigma, normal));
+		volatility_vector.push_back(cir2_heston(nn, x, T, k, a, sigma, Z1));
 	}
 
 	/* TODO
 	Make sure that the a parameter corresponds to the drift*/
 	// Building result_vector
 	for (int i = 0; i < n; i++) {
-		result_vector.push_back(heston(a, volatility_vector[i], x, n));
+		result_vector.push_back(heston(a, volatility_vector[i], x, n, Z2));
 	}
-
+}
 
 
 void plot_paths_exact(int n, int nn, double x, double T, double k, double a, double sigma, bool normal, string c) {
