@@ -40,13 +40,171 @@
 \frame{\tableofcontents[currentsection]}
 
 \begin{frame}
-\frametitle{Discretizing CIR Processes}
+\frametitle{Problem setting}
+Noting $X^{x}_{t}$ the solution of the CIR SDE:
+\begin{align*}
+dX^{x}_{t} & = a - kX^{x}_{t} + \sigma \sqrt{X^{x}_{t}} dW_{t} \\
+X^{x}_{0} & = x, x \in \mathbb{R_{+}}
+\end{align*}
+
+Qualitative analysis: when $X$ is very close to $0$, then the SDE becomes approximately
+
+$$
+dX^{x}_{t} \approx a + \sigma \sqrt{X^{x}_{t}} dW_{t}
+$$
+
+There are two possible regimes:
+\begin{itemize}
+	\item If $\sigma << a$: $X$ will mostly stay positive
+	\item If $\sigma >> a$: $X$ may become negative!
+\end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Discretizing CIR Processes}
+\frametitle{How usual numerical schemes can fail}
+
+
+\begin{tikzpicture}
+
+% Line for current point of the scheme
+\draw [->] (0,-3) -- (0,3);
+\node [below, black] at (0,-4) {$t$};
+
+% Draw transition between the two times
+\draw [->] (1,1) -- (4,1); 
+\node at (2.5,1.5) {$ p^{X^{x}_{t}}_{t} $, transition density};
+
+% Current point
+\draw[-] [draw black, very thick] (-0.1,0.5) --  (0.1,0.5);
+\node [below left,black] at (0,0.5) {$X^{x}_{t}$};
+
+% Line for next possible points
+\draw[->] (5,-3) -- (5,3);
+\node [below, black] at (5,-4) {$t + \Delta t$};
+
+% Distributions depending on regime
+% sigma_high = 4.0, a_high = 1.0
+% sigma_low = 1.0, a_low = 1.0
+
+% distribution for high
+\draw [red, domain=-3:0, variable = \y] plot ({5.0 + exp( -  (\y  -1)*(\y  -1) /(2.0 * 16.0))},{\y});
+\draw [red, domain=-3:0, variable = \y] plot ({5.0 + exp( -   (\y  -1)*(\y  -1) /(2.0 * 1.0))},{\y});
+
+% distribution for low
+\draw [green, domain=0:3, variable = \y] plot ({5.0 + exp( -  (\y  -1)*(\y  -1) /(2.0 * 16.0))},{\y});
+\draw [green, domain=0:3, variable = \y] plot ({5.0 + exp( -  (\y  -1)*(\y  -1) /(2.0 * 1.0))},{\y});
+
+% Line we should not cross
+\node [below left, black] at (0,0) {0};
+\draw[dashed] [red] (0,0) -- (7,0);
+\node [below, black] at (8,-3) {Negative values of $X^{x}_{t+\Delta t}$ } ;
+\node [below, black] at (8,3) {Positive values of $X^{x}_{t+\Delta t}$};
+
+\end{tikzpicture}
+
+
 \end{frame}
 
+\begin{frame}
+\frametitle{Regime $\sigma << a$ ( $\dfrac{\sigma^{2}}{4} \leq a $) }
+
+How do we keep the process positive and the scheme precise? \\
+
+Replace the original distribution by another with compact support. The higher the degree of precision, the more this variables has to account for the tail behaviour of the subsituted one. \\
+
+Alfonsi shows [CITE] that we keep the scheme of order $\nu$, if we subsitute the random variable with one that matches the first $2\nu +1$ moments. 
+
+Using discrete random variables, we can control the tail probability and ensure the process stays positive.
+\end{frame}
+
+\begin{frame}
+\frametitle{Regime $\sigma >> a$ ( $\dfrac{\sigma^{2}}{4} > a $) }
+
+Alonfsi proves [CITE]:
+
+\begin{itemize}
+	\item When $X^{x}_{t}$ is far away from 0, then the scheme in the case $\sigma << a$ is also valid
+	\item When $X^{x}_{t}$ is close to 0, we can approximate the process by a \textit{positive} discrete random variable that matches the first two moments and still have a second-order scheme
+\end{itemize}
+
+And we know when to switch between the two, via a threshold $\mathbf{K}$.
+\end{frame}
+
+\begin{frame}
+\frametitle{Algorithm in practice}
+
+\begin{tikzpicture}
+
+% Line for current point of the scheme, t
+\draw [->] (0,-3) -- (0,3);
+\node [below] at (0,-4) {$t$};
+
+% Point at t
+\draw[-] [black, very thick] (-0.1,-1.5) --  (0.1,-1.5);
+\node [below left] at (0,-1.5) {$X^{x}_{t}$};
+
+% Draw transition between the two times
+\draw [->] (1,1) -- (2,1); 
+\node at (1.5,1.5) {$ p^{X^{x}_{t}}_{t} $};
+
+% Line for next possible points, t+dt
+\draw[->] (3,-3) -- (3,3);
+\node [below] at (3,-4) {$t + \Delta t$};
+
+% Point at t+dt
+\draw[-] [black, very thick] (2.9,-2.0) --  (3.1,-2.0);
+\node [below left] at (3.0,-2.0) {$X^{x}_{t+\Delta t}$};
+
+% sketch transition density at t+dt (usual, 3 points, stronger in 0, 1/6, 1/6, 2/3 in probability)
+\draw [--] [green, very thick] (3.0,-2.0) -- (3.3,-2.0);
+\draw [--] [green, very thick] (3.0,-1.5) -- (3.6,-1.5);
+\draw [--] [green, very thick] (3.0,-1.0) -- (3.3,-1.0);
+
+% Draw transition between the two times
+\draw [->] (4,1) -- (5,1); 
+\node at (4,1.5) {$ p^{X^{x}_{t+\Delta t}}_{t + \Delta t} $};
+
+% Line for next possible points, t+2 dt
+\draw[->] (6,-3) -- (6,3);
+\node [below] at (6,-4) {$t + 2\Delta t$};
+
+% Point at t+2dt
+\draw[-] [draw black, very thick] (5.9,-1.0) --  (6.1,-1.0);
+\node [below left] at (5.9,-1.0) {$X^{x}_{t+2\Delta t}$};
+
+% sketch transition density at t+2dt (close to 0, 2points)
+\draw [--] [green, very thick] (6.0,-1.0) -- (6.8,-1.0);
+\draw [--] [green, very thick] (6.0,0.6) -- (6.2,0.6);
+
+% Draw transition between the two times
+\draw [->] (7,1) -- (8,1); 
+\node at (7,1.5) {$ p^{X^{x}_{t+2\Delta t}}_{t + 2\Delta t} $};
+
+% Line for next possible points, t+3 dt
+\draw[->] (9,-3) -- (9,3);
+\node [below] at (9,-4) {$t + 3\Delta t$};
+
+% Point at t+3dt
+\draw[-] [draw black, very thick] (8.9,2.0) --  (9.1,2.0);
+\node [above right] at (8.9,2.0) {$X^{x}_{t+3\Delta t}$};
+
+% sketch transition density at t+3dt (close to 0, 2points)
+\draw [--] [green, very thick] (9.0,2.0) -- (9.2,2.0);
+\draw [--] [green, very thick] (9.0,1.2) -- (9.8,1.2);
+
+
+% "0" is located at -3.0
+% plot linear approximation of the boundary
+% for small times
+\draw [dashed,black, domain = 0:9, variable = \x] plot ({\x}, {-2.5 + 0.3 * \x});
+\node [below right] at (9.0,0.2) {$\mathbf{K}(t)$};
+
+% plot 0 line
+\draw[dashed] [red] (0,-3.0) -- (9,-3.0);
+
+\end{tikzpicture}
+
+\end{frame}
 
 
 \section{Dealing with Higher Order Schemes}
