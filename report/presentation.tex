@@ -31,9 +31,10 @@
 \begin{frame}
 \frametitle{Introduction}
 \begin{itemize}
-  \item What is the problem
-  \item What does it matter?
-  \item How we solved it = What we are going tell you
+  \item CIR schemes are frequently used.
+  \item However, usual numerical schmees can fail when one tries to simulate them.
+  \item We have implemented a solution proposed in 2008 by Auélien Alfonsi in his paper \textit{High order discretization schemes for the CIR process: application to A ne Term Structure and Heston models} (hal-00143723).
+  \item We have calibrated an dsimulated some results with the Heston model.
 \end{itemize}
 \end{frame}
 
@@ -302,17 +303,32 @@ When the option is traded in the OTC market, each smile has an associated level 
 
 \begin{frame}
 \frametitle{Using the Heston Model}
+\includegraphics[width=.5\textwidth]{heston_cir220.png}
+\includegraphics[width=.5\textwidth]{heston_exact20.png}
 \end{frame}
 
+\begin{frame}
+\frametitle{Using the Heston Model}
+\includegraphics[width=\textwidth]{heston_cir21000.png}
+\end{frame}
 
+\begin{frame}
+\frametitle{Using the Heston Model}
+\includegraphics[width=\textwidth]{heston_exact1000.png}
+\end{frame}
 
+\begin{frame}
+\frametitle{Using the Heston Model}
+\includegraphics[width=.5\textwidth]{heston_time.png}
+\includegraphics[width=.5\textwidth]{heston_error.png}
+\end{frame}
 
 \begin{frame}
 \frametitle{Conclusion}
 \begin{itemize}
-  \item First thing we did
-  \item Second thing we did
-  \item Third thing we did
+  \item We have succesfully implemented Aurléien Alfonsi's work on CIR second order discretization schemes.
+  \item We have tried to calibrate and to simulate the Heston model.
+  \item Beyond our work: how would it behave with path-dependent options?
 \end{itemize}
 \end{frame}
 

@@ -60,7 +60,19 @@ int main(){
 	plot_paper(100000, 70, 0.3, 1.0, 0.1, 0.04, 2.0, false, "output/plot_paper_B.csv");
 */
 
-	plot_paths_cir2_heston(10, 1000, 1.39353, 1., 1.1159, 0.28700948, "output/paths_cir2_heston.csv", "output/paths_exact_heston.csv");
+	plot_paths_cir2_heston(10, 20, 1.39353, 1., 1.1159, 0.28700948, "output/paths_cir2_heston20.csv", "output/paths_exact_heston20.csv");
+
+
+	plot_paths_cir2_heston(10, 10, 1.39353, 1., 1.1159, 0.28700948, "output/paths_cir2_heston10.csv", "output/paths_exact_heston10.csv");
+
+	plot_paths_cir2_heston(10, 100, 1.39353, 1., 1.1159, 0.28700948, "output/paths_cir2_heston100.csv", "output/paths_exact_heston100.csv");
+
+	plot_paths_cir2_heston(10, 1000, 1.39353, 1., 1.1159, 0.28700948, "output/paths_cir2_heston1000.csv", "output/paths_exact_heston1000.csv");
+
+	plot_paths_cir2_heston(10, 10000, 1.39353, 1., 1.1159, 0.28700948, "output/paths_cir2_heston10000.csv", "output/paths_exact_heston10000.csv");
+
+	plot_paths_cir2_heston(10, 100000, 1.39353, 1., 1.1159, 0.28700948, "output/paths_cir2_heston100000.csv", "output/paths_exact_heston100000.csv");
+
 
 	//system("pause");
 

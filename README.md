@@ -14,7 +14,14 @@ This is the simulation project `discretization-cir-process` at Imperial College 
 
 ## Features
 
+Our work features:
+- Implementation of Aurélien Alfonsi's second order discretization schme for CIR processes ([hal-00143723, 2008](https://hal.archives-ouvertes.fr/hal-00143723/document)).
+- A calibrated Heston model.
+- A presentation with graphs representing our work.
+
 ## Installation
+
+Download the `src` folder and use `C++` or above. We recommend the `g++` compiler.
 
 ## Usage
 
@@ -42,10 +49,10 @@ The team includes the following members, with the associated GitHub identifiers.
 
 | Name | GitHub id |
 | --- | --- |
+|Thomas Espel|tjespel|
 |Kees Groeneweg|kegror|
 |Luis Pavon|luispavon22|
 |Mehdi Tomas|mehditomas|
-|Thomas Espel|tjespel|
 
 ## License
 Apache 2
