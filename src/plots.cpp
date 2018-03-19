@@ -6,7 +6,7 @@
 //	for (int j = 0; j < n; j++) { M.push_back(CIR2(nn, x, T, k, a, sigma)); }
 //=======
 #include "plots.hpp"
-#include "exact_values.h"
+#include "exact_values.hpp"
 
 void plot_mean_var_cir2(int nn, double x, double T, double k, double a, double sigma, string c) { //nn are the number of nodes
 
@@ -43,8 +43,7 @@ void plot_paths_cir2(int n, int nn, double x, double T, double k, double a, doub
 	fout.close();
 }
 
-<<<<<<< HEAD
-=======
+
 
 
 int plot_paths_cir2_heston(int n, int nn, double x, double T, double k, double a, string c) {
@@ -85,7 +84,7 @@ int plot_paths_cir2_heston(int n, int nn, double x, double T, double k, double a
 }
 
 
->>>>>>> master
+
 void plot_paths_exact(int n, int nn, double x, double T, double k, double a, double sigma, bool normal, string c) {
 	vector <vector<double> > M;
 	for (int j = 0; j < n; j++) { M.push_back(exact(nn, x, T, k, a, sigma)); }

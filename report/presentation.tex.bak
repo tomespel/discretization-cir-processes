@@ -247,18 +247,16 @@ And we know when to switch between the two, via a threshold $\mathbf{K}$.
   \item Mathematical model implementing stochastic volatility.
   \item Uses an underlying CIR process for the variance.
 \end{itemize}
-
-$$dS_t=\mu S_tdt+\sqrt{\nu_t}S_tdW_t^s$$
-$$d\nu_t = \kappa(\theta-\nu_t)dt+\xi\sqrt{\nu_t}dW_t^\nu$$
-
 \end{frame}
 
 \begin{frame}
 \frametitle{Using the Heston Model - Heston model}
-There is one subtlety when generating the random numbers.
-$$\Delta S_t=\mu S_tdt+\sqrt{\nu_t}S_tZ_1$$
-$$\Delta\nu_t = \kappa(\theta-\nu_t)dt+\xi\sqrt{\nu_t}Z_2$$
+
+$$dS_t=\mu S_tdt+\sqrt{\nu_t}S_tdW_t^s$$
+$$d\nu_t = \kappa(\theta-\nu_t)dt+\ksi\sqrt{\nu_t}dW_t^\nu$$
+
 \end{frame}
+
 
 \begin{frame}
 \frametitle{Using the Heston Model - Calibration}

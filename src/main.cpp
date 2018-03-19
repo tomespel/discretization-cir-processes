@@ -1,6 +1,6 @@
 #include "plots.hpp"
 #include "distributions.hpp"
-#include "exact_values.h"
+#include "exact_values.hpp"
 #include "cir2.hpp"
 
 /*

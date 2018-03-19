@@ -5,14 +5,13 @@
 #include <algorithm>
 
 #include "cir2.hpp"
-<<<<<<< HEAD
-#include "monte_carlo.h"
-
-void plot_mean_var_cir2(int nn, double x, double T, double k, double a, double sigma, string c);
-=======
 #include "heston.hpp"
 #include "monte_carlo.hpp"
->>>>>>> master
+
+void plot_mean_var_cir2(int nn, double x, double T, double k, double a, double sigma, string c);
+
+
+
 
 using namespace std;
 

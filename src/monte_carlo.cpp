@@ -1,4 +1,4 @@
-#include "monte_carlo.h"
+#include "monte_carlo.hpp"
 
 
 double Ecir2(int m, int n, double x, double T, double k, double a, double sigma, bool normal) { //m: number of paths, rest of parameters as in cir2
@@ -42,7 +42,7 @@ double Eb3(int m, int n, double x, double T, double k, double a, double sigma) {
 }
 
 
-vector<double> E_exp_paper(int m, int n, double x, double T, double k, double a, double sigma, bool cir2_normal) { //m: number of paths, rest of parameters as in cir2 
+vector<double> E_exp_paper(int m, int n, double x, double T, double k, double a, double sigma, bool cir2_normal) { //m: number of paths, rest of parameters as in cir2
 	random_device rd;
 	default_random_engine gen(rd());
 	normal_distribution<double> dist(0.0, 1.0);//N(0,1);

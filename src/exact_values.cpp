@@ -1,4 +1,4 @@
-#include "exact_values.h"
+#include "exact_values.hpp"
 
 double cir_mean(double x0, double t, double k, double a, double sigma) {
 	return x0*exp(-k*t) + (a/k) *(1.0 - exp(-k*t));
