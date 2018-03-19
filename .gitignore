@@ -158,6 +158,7 @@ ENV/
 
 # Compile
 /bin
+src/bin
 /src/run
 .DS_Store
 
