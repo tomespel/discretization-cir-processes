@@ -46,7 +46,7 @@ void plot_paths_cir2(int n, int nn, double x, double T, double k, double a, doub
 
 
 
-int plot_paths_cir2_heston(int n, int nn, double x, double T, double k, double a, string c) {
+int plot_paths_cir2_heston(int n, int nn, double x, double T, double k, double a, string c, string d) {
 
 	vector <vector<double> > result_vector;
 	vector <vector<double> > volatility_vector;
@@ -57,30 +57,81 @@ int plot_paths_cir2_heston(int n, int nn, double x, double T, double k, double a
 	std::default_random_engine generator;
 	std::normal_distribution<double> normal(0.0,1.0);
 
-	vector<double> Z1;
-	vector<double> Z2;
+	vector <vector<double> > Z1;
+	vector <vector<double> > Z2;
 
-	double rau = 1; // TODO change it
-	for (int i=0; i<Z2.size(); i++){
-		Z2[i] = rau * rau * Z2[i] + (1 - rau * rau ) * Z1[i];
+
+	for (int j=0; j<n; j++){
+		vector<double> Z1temp;
+		vector<double> Z2temp;
+		for (int i=0; i<nn; i++){
+			Z1temp.push_back(normal(generator));
+			Z2temp.push_back(normal(generator));
+		}
+		Z1.push_back(Z1temp);
+		Z2.push_back(Z2temp);
 	}
 
+	double rau = .7683;
+	for (int j=0; j<n; j++){
+		for (int i=0; i<Z2.size(); i++){
+			Z2[j][i] = rau * rau * Z2[j][i] + std::sqrt(1 - rau * rau ) * Z1[j][i];
+		}
+	}
 
-	double sigma = 0;
+	double sigma = 0.3484;
 
-	/* TODO
-	Figure out how to generate sigma with current CIR2 structure*/
-	// Building the volatility path
+	std::clock_t start = std::clock();
 	for (int i = 0; i < n; i++) {
-		volatility_vector.push_back(cir2_heston(nn, x, T, k, a, sigma, Z1));
+		volatility_vector.push_back(cir2_heston(nn, 0.07728, T, k, .092, sigma, Z1[i]));
 	}
 
-	/* TODO
-	Make sure that the a parameter corresponds to the drift*/
-	// Building result_vector
 	for (int i = 0; i < n; i++) {
-		result_vector.push_back(heston(a, volatility_vector[i], x, n, Z2));
+		result_vector.push_back(heston(a, volatility_vector[i], x, n, Z2[i]));
 	}
+	std::clock_t end = std::clock();
+	cout << "Paper version: " << (end-start) / (double) CLOCKS_PER_SEC << endl;
+
+	ofstream fout(c);
+	if (!fout.is_open()) {
+		cout << "Error opening the file output.txt for writing." << endl;
+		//return -1;
+	}
+	for (int j = 0; j <= nn; j++) {
+		for (int i = 0; i < n - 1;i++) {
+			fout << setprecision(5) << result_vector[i][j] << ",";
+		}
+		fout << setprecision(5) << result_vector[n - 1][j] << endl;
+	}
+	fout.close();
+
+	volatility_vector.clear();
+	result_vector.clear();
+
+	start = std::clock();
+	for (int i = 0; i < n; i++) {
+		volatility_vector.push_back(exact_heston(nn, 0.07728, T, k, .092, sigma, Z1[i]));
+	}
+
+	for (int i = 0; i < n; i++) {
+		result_vector.push_back(heston(a, volatility_vector[i], x, n, Z2[i]));
+	}
+	end = std::clock();
+	cout << "Exact version: " << (end-start) / (double) CLOCKS_PER_SEC << endl;
+
+	ofstream fout2(d);
+	if (!fout2.is_open()) {
+		cout << "Error opening the file output.txt for writing." << endl;
+		//return -1;
+	}
+	for (int j = 0; j <= nn; j++) {
+		for (int i = 0; i < n - 1;i++) {
+			fout2 << setprecision(5) << result_vector[i][j] << ",";
+		}
+		fout2 << setprecision(5) << result_vector[n - 1][j] << endl;
+	}
+	fout2.close();
+
 }
 
 

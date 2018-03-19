@@ -1,7 +1,7 @@
 #include "heston.hpp"
 
 double heston_differential(double drift, double volatility, double St, double step, double normal){
-  return drift * St * step + std::sqrt(volatility)*St*normal;
+  return St * exp((drift - 0.5*volatility)*step + std::sqrt(step*volatility)*normal);
 }
 
 vector<double> heston(double drift, vector<double> volatility, double S0, int size, vector<double> normal){

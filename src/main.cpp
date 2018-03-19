@@ -40,6 +40,7 @@ int main(){
 	*/
 
 	//Some theoretical values for the paper plots
+	/*
 	double mean = cir_mean(x0, T, k, a, vol);
 	double moment = moment_gen_cir2(-1.0, x0, T, k, a, vol);
 	cout << setprecision(5) << mean << " " << moment << endl;
@@ -47,7 +48,7 @@ int main(){
 	double mean_b = cir_mean(x0_b, T, k_b, a_b, vol_b);
 	double moment_b = moment_gen_cir2(-1.0, x0_b, T, k_b, a_b, vol_b);
 	cout << setprecision(5) << mean_b << " " << moment_b << endl;
-
+	*/
 
 
 	//Checking order of scheme
@@ -55,11 +56,13 @@ int main(){
 
 	//Plot Paper
 	//plot_paper(100000, 100, x0, T, k, a, vol, true, "output/plot_paper.csv");
-
+/*
 	plot_paper(100000, 70, 0.3, 1.0, 0.1, 0.04, 2.0, false, "output/plot_paper_B.csv");
+*/
 
+	plot_paths_cir2_heston(10, 1000, 1.39353, 1., 1.1159, 0.28700948, "output/paths_cir2_heston.csv", "output/paths_exact_heston.csv");
 
-	system("pause");
+	//system("pause");
 
 	return 0;
 }
