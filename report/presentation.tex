@@ -43,13 +43,43 @@
 \frame{\tableofcontents[currentsection]}
 
 \begin{frame}
-\frametitle{Problem setting}
-Noting $X^{x}_{t}$ the solution of the CIR SDE:
+\frametitle{CIR Processes}
+Noting $X^{x}_{t}$ the solution of the CIR (Cox-Ingersoll-Ross) SDE:
 \begin{align*}
 dX^{x}_{t} & = a - kX^{x}_{t} + \sigma \sqrt{X^{x}_{t}} dW_{t} \\
 X^{x}_{0} & = x, x \in \mathbb{R_{+}}
 \end{align*}
+\begin{itemize}
+  \item The main difficulty is to disctrize the process around 0, where since the square root is not Lipschitzian.
+  \item Euler and Milstein schemes are usually not well defined, and generate negative values.
+\end{itemize}
+\end{frame}
 
+\begin{frame}
+\frametitle{CIR Processes - Why it matters}
+\begin{itemize}
+  \item CIR processes are widely used in the industry.
+  \item Issues with their discretization have been notices. Several works have been published on that matter, notably Ninomiya and Victoir's.
+  \item Aurélien Alfonsi presents very efficient schemes for general affine diffusions, without any restriction on the parameters.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{CIR Processes - Why it matters}
+Noting $X^{x}_{t}$ the solution of the CIR (Cox-Ingersoll-Ross) SDE:
+\begin{align*}
+dX^{x}_{t} & = a - kX^{x}_{t} + \sigma \sqrt{X^{x}_{t}} dW_{t} \\
+X^{x}_{0} & = x, x \in \mathbb{R_{+}}
+\end{align*}
+Large values of $\sigma$:
+\begin{itemize}
+  \item No problem when the CIR process represents the short interest rate.
+  \item Issues when the CIR process respresents default intensity in credit risk or the stock volatility like in the Heston model.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{How usual numerical schemes can fail}
 Qualitative analysis: when $X$ is very close to $0$, then the SDE becomes approximately
 
 $$
@@ -65,8 +95,6 @@ There are two possible regimes:
 
 \begin{frame}
 \frametitle{How usual numerical schemes can fail}
-
-
  \begin{tikzpicture}
 
  % Line for current point of the scheme
@@ -217,7 +245,7 @@ And we know when to switch between the two, via a threshold $\mathbf{K}$.
 \frametitle{Schemes for the CIR process}
 \centerline{CIR process:}
 $$
-	dr_{t}  = a - kr_{t} + \sigma \sqrt{r_{t}} dW_{t} 
+	dr_{t}  = a - kr_{t} + \sigma \sqrt{r_{t}} dW_{t}
 $$
 The process at $T$ features a transition noncentral chi-square distribution with $\frac{4a}{\sigma^2}$ degrees of freedom and non-centrality parameter $\frac{4kr_te^{-kt}}{(1 - e^{-kt})\sigma^2}$.
 \vspace{0.5cm}
@@ -230,7 +258,7 @@ Why would we want to explore other schemes?
 
 \begin{frame}
 \frametitle{Schemes for the CIR process}
-%We can simulate the process exactly provided we can sample from the non chi-square distribution. 
+%We can simulate the process exactly provided we can sample from the non chi-square distribution.
 \centering
 \includegraphics[width=0.75\textwidth]{exact_scheme.png}
 \end{frame}
@@ -243,17 +271,17 @@ Why would we want to explore other schemes?
 
 \begin{frame}
 \frametitle{Schemes for the CIR process}
-We can simulate the process exactly provided we can sample from the non chi-square distribution which implies sampling from a Gamma distribution. 
+We can simulate the process exactly provided we can sample from the non chi-square distribution which implies sampling from a Gamma distribution.
 \vspace{0.5cm}
 
-$2X \sim \chi_\nu$ where $X \sim gamma(\nu/2,1)$. 
+$2X \sim \chi_\nu$ where $X \sim gamma(\nu/2,1)$.
 \vspace{0.5cm}
 
 Methods for sampling a $gamma(a, 1)$ usually distinguish between $a \leq 1$ and $a > 1$. In our case $a = \frac{2a}{\sigma^2}$.
 \vspace{0.5cm}
 
 Exact schemes are drastically too slow if one has to simulate the process along a time-grid which occurs when pricing path-dependent options.
-	
+
 \end{frame}
 
 \begin{frame}
@@ -261,11 +289,11 @@ Exact schemes are drastically too slow if one has to simulate the process along 
 Alternatives:
 \vspace{0.5cm}
 
-Euler-Maruyama scheme: 
+Euler-Maruyama scheme:
 
 $$ X_{t + 1}^n = X_t^n + \frac{1}{n}(a - kX_t^n) + \frac{\sigma}{\sqrt{n}}\sqrt{X_t^n}Z_t^n$$
 
-Other schemes: 
+Other schemes:
 
 $$ X_{t + 1}^n = X_t^n + \frac{1}{n}(a - kX_t^n) + \frac{\sigma}{\sqrt{n}}\sqrt{(X_t^n)^+}Z_t^n$$
 
@@ -274,16 +302,16 @@ $$ X_{t + 1}^n = |X_t^n + \frac{1}{n}(a - kX_t^n) + \frac{\sigma}{\sqrt{n}}\sqrt
 
 \begin{frame}
 \frametitle{Second order schemes for the CIR process}
-\textbf{\Large{$\sigma^2 \leq 4a$}} 
+\textbf{\Large{$\sigma^2 \leq 4a$}}
 \vspace{0.5cm}
 
 In this case, the \textit{Ninomiya-Victoir} scheme for the CIR process writes:
 
 $$ X_{t + 1}^n = \varphi(X_t^n, \Delta, \sqrt{\Delta}Z)$$
 
-where 
+where
 \begin{align*}
-\varphi(x, t, w) = & e^{-\frac{kt}{2}}(\sqrt{(a - \sigma^2/4)\phi(t/2) +  e^{-\frac{kt}{2}}x} + \frac{\sigma}{2}w)^2 \\ 
+\varphi(x, t, w) = & e^{-\frac{kt}{2}}(\sqrt{(a - \sigma^2/4)\phi(t/2) +  e^{-\frac{kt}{2}}x} + \frac{\sigma}{2}w)^2 \\
                    & + (a - \sigma^2/4)\phi(t/2)
 \end{align*}
 
@@ -297,20 +325,20 @@ where
 
 \begin{frame}
 \frametitle{Second order schemes for the CIR process}
-\textbf{\Large{$\sigma^2 > 4a$}} 
+\textbf{\Large{$\sigma^2 > 4a$}}
 \vspace{0.5cm}
-	
+
 In this case, the \textit{Alfonsi} scheme for the CIR process writes:
-	
+
 \begin{align*}
 	 X_{t + 1}^n =& \varphi(X_t^n, \Delta, \sqrt{\Delta}Y), \hspace{1.5cm} X_t^n \geq 1_{\{\sigma^2 > 4a \}}K_2(\Delta)\\
-	 \\           
+	 \\
      X_{t + 1}^n =& 1_{\{U \leq \pi(\Delta, X_t^n)\}}A_1(\Delta, X_t^n) + 1_{\{U \ > \pi(\Delta, X_t^n)\}}A_2(\Delta, X_t^n), \\
      \\
                   & \hspace{4.5cm}X_t^n < 1_{\{\sigma^2 > 4a \}}K_2(\Delta)
 \end{align*}
 
-Where $Y$ is a discrete bounded variable that fits the five first moments of a standard Gaussian variable.	
+Where $Y$ is a discrete bounded variable that fits the five first moments of a standard Gaussian variable.
 \end{frame}
 
 \begin{frame}
@@ -328,7 +356,7 @@ Where $Y$ is a discrete bounded variable that fits the five first moments of a s
 
 \begin{frame}
 \frametitle{Simulations for the CIR process}
-Similarly as in the paper we want to illustrate the convergence of the second order scheme and some of its possible variations. 
+Similarly as in the paper we want to illustrate the convergence of the second order scheme and some of its possible variations.
 \vspace{0.1cm}
 
 In order to do this we will compute the quantity $\mathbb{E}[e^{-X_T^n}]$ given by the different schemes and fixing the number of \\paths $= 100000$.
