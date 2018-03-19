@@ -52,17 +52,10 @@ X^{x}_{0} & = x, x \in \mathbb{R_{+}}
 \begin{itemize}
   \item The main difficulty is to disctrize the process around 0, where since the square root is not Lipschitzian.
   \item Euler and Milstein schemes are usually not well defined, and generate negative values.
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{CIR Processes - Why it matters}
-\begin{itemize}
-  \item CIR processes are widely used in the industry.
-  \item Issues with their discretization have been noticed. Several works have been published on that matter, notably Ninomiya and Victoir's.
   \item Aurélien Alfonsi presents very efficient schemes for general affine diffusions, without any restriction on the parameters.
 \end{itemize}
 \end{frame}
+
 
 \begin{frame}
 \frametitle{CIR Processes - Why it matters}
@@ -413,12 +406,6 @@ $$d\nu_t = \kappa(\theta-\nu_t)dt+\xi\sqrt{\nu_t}dW_t^\nu$$
 
 \end{frame}
 
-\begin{frame}
-\frametitle{Using the Heston Model - Heston model}
-There is one subtlety when generating the random numbers.
-$$\Delta S_t=\mu S_t\Delta t+\sqrt{\nu_t}S_tZ_1$$
-$$\Delta\nu_t = \kappa(\theta-\nu_t)\Delta t+\xi\sqrt{\nu_t}Z_2$$
-\end{frame}
 
 \begin{frame}
 \frametitle{Using the Heston Model - Calibration}
@@ -475,24 +462,22 @@ S_0 &= 1.39353 \\
 
 \end{frame}
 
+% \begin{frame}
+% \frametitle{Using the Heston Model}
+% \includegraphics[width=.5\textwidth]{heston_cir220.png}
+% \includegraphics[width=.5\textwidth]{heston_exact20.png}
+% \end{frame}
+
 \begin{frame}
 \frametitle{Using the Heston Model}
-\includegraphics[width=.5\textwidth]{heston_cir220.png}
-\includegraphics[width=.5\textwidth]{heston_exact20.png}
+\centering
+\includegraphics[width=.5\textwidth]{heston_cir21000.png}
+\includegraphics[width=.5\textwidth]{heston_exact1000.png}
 \end{frame}
 
 \begin{frame}
 \frametitle{Using the Heston Model}
-\includegraphics[width=\textwidth]{heston_cir21000.png}
-\end{frame}
-
-\begin{frame}
-\frametitle{Using the Heston Model}
-\includegraphics[width=\textwidth]{heston_exact1000.png}
-\end{frame}
-
-\begin{frame}
-\frametitle{Using the Heston Model}
+\centering
 \includegraphics[width=.5\textwidth]{heston_time.png}
 \includegraphics[width=.5\textwidth]{heston_error.png}
 \end{frame}
@@ -500,7 +485,7 @@ S_0 &= 1.39353 \\
 \begin{frame}
 \frametitle{Conclusion}
 \begin{itemize}
-  \item We have succesfully implemented Aurléien Alfonsi's work on CIR second order discretization schemes.
+  \item We have succesfully implemented Aurélien Alfonsi's work on CIR second order discretization schemes.
   \item We have tried to calibrate and to simulate the Heston model.
   \item Beyond our work: how would it behave with path-dependent options?
 \end{itemize}
