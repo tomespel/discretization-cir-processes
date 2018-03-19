@@ -32,9 +32,9 @@
 \frametitle{Introduction}
 \begin{itemize}
   \item CIR schemes are frequently used.
-  \item However, usual numerical schmees can fail when one tries to simulate them.
-  \item We have implemented a solution proposed in 2008 by Auélien Alfonsi in his paper \textit{High order discretization schemes for the CIR process: application to A ne Term Structure and Heston models} (hal-00143723).
-  \item We have calibrated an dsimulated some results with the Heston model.
+  \item However, usual numerical schemes can fail when one tries to simulate them.
+  \item We have implemented a solution proposed in 2008 by Aurélien Alfonsi in his paper \textit{High order discretization schemes for the CIR process: application to A ne Term Structure and Heston models} (hal-00143723).
+  \item We have calibrated and simulated some results with the Heston model.
 \end{itemize}
 \end{frame}
 
@@ -59,7 +59,7 @@ X^{x}_{0} & = x, x \in \mathbb{R_{+}}
 \frametitle{CIR Processes - Why it matters}
 \begin{itemize}
   \item CIR processes are widely used in the industry.
-  \item Issues with their discretization have been notices. Several works have been published on that matter, notably Ninomiya and Victoir's.
+  \item Issues with their discretization have been noticed. Several works have been published on that matter, notably Ninomiya and Victoir's.
   \item Aurélien Alfonsi presents very efficient schemes for general affine diffusions, without any restriction on the parameters.
 \end{itemize}
 \end{frame}
@@ -143,7 +143,7 @@ How do we keep the process positive and the scheme precise? \\
 
 Replace the original distribution by another with compact support. The higher the degree of precision, the more this variables has to account for the tail behaviour of the subsituted one. \\
 
-Alfonsi shows [CITE] that we keep the scheme of order $\nu$, if we subsitute the random variable with one that matches the first $2\nu +1$ moments.
+Alfonsi shows that we keep the scheme of order $\nu$, if we subsitute the random variable with one that matches the first $2\nu +1$ moments.
 
 Using discrete random variables, we can control the tail probability and ensure the process stays positive.
 \end{frame}
@@ -151,7 +151,7 @@ Using discrete random variables, we can control the tail probability and ensure 
 \begin{frame}
 \frametitle{Regime $\sigma >> a$ ( $\dfrac{\sigma^{2}}{4} > a $) }
 
-Alonfsi proves [CITE]:
+Alonfsi proves:
 
 \begin{itemize}
 	\item When $X^{x}_{t}$ is far away from 0, then the scheme in the case $\sigma << a$ is also valid
@@ -416,8 +416,8 @@ $$d\nu_t = \kappa(\theta-\nu_t)dt+\xi\sqrt{\nu_t}dW_t^\nu$$
 \begin{frame}
 \frametitle{Using the Heston Model - Heston model}
 There is one subtlety when generating the random numbers.
-$$\Delta S_t=\mu S_tdt+\sqrt{\nu_t}S_tZ_1$$
-$$\Delta\nu_t = \kappa(\theta-\nu_t)dt+\xi\sqrt{\nu_t}Z_2$$
+$$\Delta S_t=\mu S_t\Delta t+\sqrt{\nu_t}S_tZ_1$$
+$$\Delta\nu_t = \kappa(\theta-\nu_t)\Delta t+\xi\sqrt{\nu_t}Z_2$$
 \end{frame}
 
 \begin{frame}
@@ -458,6 +458,21 @@ Basically, it is necessary to compute the associated strike for each option in o
 $$\underset{\theta,\sigma,\rho,\kappa,\eta,\mu}{min}=(BS(\sigma,r,K,S_{0},T)-P_{heston}(\theta,\sigma,\rho,\kappa,\eta,\mu,r,K,S_{0},T))^2$$
 
 When the option is traded in the OTC market, each smile has an associated level of strike. When the option is traded in an exchange market all smiles have the same level of strike.
+\end{frame}
+
+\begin{frame}
+\frametitle{Using the Heston Model - Calibration}
+
+\begin{align*}
+V_0 &= 0.07727 \\
+S_0 &= 1.39353 \\
+\mu = r &= 0.092 \\
+\rho &= -0.7683 \\
+\theta &= 0.2572 \\
+\sigma &= 0.3484 \\
+\kappa &= 1.1159
+\end{align*}
+
 \end{frame}
 
 \begin{frame}
