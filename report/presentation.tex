@@ -210,32 +210,163 @@ And we know when to switch between the two, via a threshold $\mathbf{K}$.
 \end{frame}
 
 
-\section{Dealing with Higher Order Schemes}
+\section{Schemes for the CIR process}
 \frame{\tableofcontents[currentsection]}
 
 \begin{frame}
-\frametitle{Dealing with Higher Order Schemes}
+\frametitle{Schemes for the CIR process}
+\centerline{CIR process:}
+$$
+	dr_{t}  = a - kr_{t} + \sigma \sqrt{r_{t}} dW_{t} 
+$$
+The process at $T$ features a transition noncentral chi-square distribution with $\frac{4a}{\sigma^2}$ degrees of freedom and non-centrality parameter $\frac{4kr_te^{-kt}}{(1 - e^{-kt})\sigma^2}$.
+\vspace{0.5cm}
+
+Exact simulation methods exist.
+\vspace{0.5cm}
+
+Why would we want to explore other schemes?
 \end{frame}
 
 \begin{frame}
-\frametitle{Dealing with Higher Order Schemes}
-\end{frame}
-
-
-
-
-
-\section{Simulation Results}
-\frame{\tableofcontents[currentsection]}
-
-\begin{frame}
-\frametitle{Simulation Results}
+\frametitle{Schemes for the CIR process}
+%We can simulate the process exactly provided we can sample from the non chi-square distribution. 
+\centering
+\includegraphics[width=0.75\textwidth]{exact_scheme.png}
 \end{frame}
 
 \begin{frame}
-\frametitle{Simulation Results}
+\frametitle{Schemes for the CIR process}
+\centering
+\includegraphics[width=\textwidth]{paths_exact.png}
 \end{frame}
 
+\begin{frame}
+\frametitle{Schemes for the CIR process}
+We can simulate the process exactly provided we can sample from the non chi-square distribution which implies sampling from a Gamma distribution. 
+\vspace{0.5cm}
+
+$2X \sim \chi_\nu$ where $X \sim gamma(\nu/2,1)$. 
+\vspace{0.5cm}
+
+Methods for sampling a $gamma(a, 1)$ usually distinguish between $a \leq 1$ and $a > 1$. In our case $a = \frac{2a}{\sigma^2}$.
+\vspace{0.5cm}
+
+Exact schemes are drastically too slow if one has to simulate the process along a time-grid which occurs when pricing path-dependent options.
+	
+\end{frame}
+
+\begin{frame}
+\frametitle{Schemes for the CIR process}
+Alternatives:
+\vspace{0.5cm}
+
+Euler-Maruyama scheme: 
+
+$$ X_{t + 1}^n = X_t^n + \frac{1}{n}(a - kX_t^n) + \frac{\sigma}{\sqrt{n}}\sqrt{X_t^n}Z_t^n$$
+
+Other schemes: 
+
+$$ X_{t + 1}^n = X_t^n + \frac{1}{n}(a - kX_t^n) + \frac{\sigma}{\sqrt{n}}\sqrt{(X_t^n)^+}Z_t^n$$
+
+$$ X_{t + 1}^n = |X_t^n + \frac{1}{n}(a - kX_t^n) + \frac{\sigma}{\sqrt{n}}\sqrt{X_t^n}Z_t^n|$$
+\end{frame}
+
+\begin{frame}
+\frametitle{Second order schemes for the CIR process}
+\textbf{\Large{$\sigma^2 \leq 4a$}} 
+\vspace{0.5cm}
+
+In this case, the \textit{Ninomiya-Victoir} scheme for the CIR process writes:
+
+$$ X_{t + 1}^n = \varphi(X_t^n, \Delta, \sqrt{\Delta}Z)$$
+
+where 
+\begin{align*}
+\varphi(x, t, w) = & e^{-\frac{kt}{2}}(\sqrt{(a - \sigma^2/4)\phi(t/2) +  e^{-\frac{kt}{2}}x} + \frac{\sigma}{2}w)^2 \\ 
+                   & + (a - \sigma^2/4)\phi(t/2)
+\end{align*}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Second order schemes for the CIR process}
+	\centering
+	\includegraphics[width=\textwidth]{paths_cir2_N.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Second order schemes for the CIR process}
+\textbf{\Large{$\sigma^2 > 4a$}} 
+\vspace{0.5cm}
+	
+In this case, the \textit{Alfonsi} scheme for the CIR process writes:
+	
+\begin{align*}
+	 X_{t + 1}^n =& \varphi(X_t^n, \Delta, \sqrt{\Delta}Y), \hspace{1.5cm} X_t^n \geq 1_{\{\sigma^2 > 4a \}}K_2(\Delta)\\
+	 \\           
+     X_{t + 1}^n =& 1_{\{U \leq \pi(\Delta, X_t^n)\}}A_1(\Delta, X_t^n) + 1_{\{U \ > \pi(\Delta, X_t^n)\}}A_2(\Delta, X_t^n), \\
+     \\
+                  & \hspace{4.5cm}X_t^n < 1_{\{\sigma^2 > 4a \}}K_2(\Delta)
+\end{align*}
+
+Where $Y$ is a discrete bounded variable that fits the five first moments of a standard Gaussian variable.	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Second order schemes for the CIR process}
+	\centering
+	\includegraphics[width=\textwidth]{paths_cir2_Y.png}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Second order schemes for the CIR process}
+	\centering
+	\includegraphics[height=0.4\textheight, width=\textwidth]{paths_cir2_not_feller.png}\\
+	\includegraphics[height=0.4\textheight, width=\textwidth]{paths_cir2_not_feller_large_a.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Simulations for the CIR process}
+Similarly as in the paper we want to illustrate the convergence of the second order scheme and some of its possible variations. 
+\vspace{0.1cm}
+
+In order to do this we will compute the quantity $\mathbb{E}[e^{-X_T^n}]$ given by the different schemes and fixing the number of \\paths $= 100000$.
+\vspace{0.3cm}
+
+To compute the theoretical value $\mathbb{E}[e^{-X_T}]$ recall that the CIR process has a noncentral chi-square future distribution with $\frac{4a}{\sigma^2}$ degrees of freedom and non-centrality parameter $\frac{4kx_te^{-kt}}{(1 - e^{-kt})\sigma^2}$, so we can use the moment generating function of a chi-square distribution.
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Simulations for the CIR. Feller condition satisfied.}
+	\centering
+	\includegraphics[width=\textwidth]{schemes_feller.png}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Simulations for the CIR. Feller condition satisfied.}
+	\centering
+	\includegraphics[width=\textwidth]{Exact_CIR2.png}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Simulations for the CIR. Feller condition satisfied.}
+	\centering
+	\includegraphics[width=\textwidth]{schemes_feller_30.png}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Simulations for the CIR. Feller cond. not satisfied.}
+	\centering
+	\includegraphics[width=\textwidth]{good_schemes_not_feller.png}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Simulations for the CIR. Feller cond. not satisfied.}
+	\centering
+	\includegraphics[width=\textwidth]{schemes_not_feller.png}
+\end{frame}
 
 
 \section{Using the Heston Model}
